@@ -4,10 +4,6 @@ import styled from "styled-components";
 import members from "./members";
 import React from "react";
 
-const Navbar = () => {
-
-};
-
 const Header = styled.h1`
   text-align: center;
   font-family: "Jost", sans-serif;
