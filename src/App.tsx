@@ -293,8 +293,8 @@ const App = () => {
   return (
     <Page>
       <Helmet>
-        <meta property="og:image" content={jacket} />
-        <meta property="twitter:image" content={jacket} />
+        <meta property="og:image" content={"https://bros.aotakeuma.com" + jacket} />
+        <meta property="twitter:image" content={"https://bros.aotakeuma.com" + jacket} />
       </Helmet>
       <Banner />
       <Main>

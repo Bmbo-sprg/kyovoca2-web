@@ -8,7 +8,6 @@ const AppRouted = () => {
     <Router>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );
