@@ -18,6 +18,14 @@ const Header = styled.h1`
   font-size: 3rem;
   color: #115394;
   text-decoration: underline dotted 2px;
+  text-underline-offset: 0.2em;
+`;
+
+const CenterText = styled.p`
+  text-align: center;
+  margin-top: 40px;
+  font-size: 1.2rem;
+  line-height: 2;
 `;
 
 const ResponsiveImage = styled.img`
@@ -48,6 +56,16 @@ const Banner = () => {
     </BannerContainer>
   );
 };
+
+const Introduction = () => {
+  return (
+    <CenterText>
+      サークル、回生、音楽ジャンルの垣根を超えた、<br />
+      気鋭京大生ボカロPによるコンピレーションアルバム<br />
+      Kyoto University VOCALOID Compilation 2 「Bros.」
+    </CenterText>
+  )
+}
 
 interface MemberProps {
   member: {
@@ -121,17 +139,6 @@ const LinkIcon: React.FC<LinkIconProps> = ( {src, href} ) => {
   )
 }
 
-const Comment = styled.p`
-  background-color: #f0f0f0;
-  display: none;
-  font-size: 14px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
-  width: 400px;
-`;
-
 const Member: React.FC<MemberProps> = ( { member, onHover, onLeave, interactive } ) => {
   return (
     <MemberContainer interactive={interactive} onMouseEnter={onHover} onMouseLeave={onLeave}>
@@ -146,7 +153,6 @@ const Member: React.FC<MemberProps> = ( { member, onHover, onLeave, interactive 
           {member.pixiv && <LinkIcon src={pixiv} href={member.pixiv} />}
         </LinkIcons>
       </NameLink>
-      {interactive && member.comment && <Comment>{member.comment}</Comment>}
     </MemberContainer>
   )
 }
@@ -167,6 +173,8 @@ const CommentContainer = styled.div`
   padding: 10px;
   white-space: pre-wrap;
   width: 50%;
+  min-width: 200px;
+  font-size: clamp(12px, 1vw, 14px);
 `;
 
 const Members = () => {
@@ -191,10 +199,10 @@ const Members = () => {
   )
 }
 
-const Illustrator = () => {
+const Artwork = () => {
   return (
     <>
-      <Header>Illustrator</Header>
+      <Header>Artwork</Header>
       <MembersContainer>
         <Member member={{
           "name": "柚雪ふゆね",
@@ -214,6 +222,51 @@ const Organizer = () => {
       <MembersContainer>
         <Member member={members[15]} />
       </MembersContainer>
+    </>
+  )
+}
+
+const XFD = () => {
+  return (
+    <>
+      <Header>Crossfade</Header>
+      <CenterText>Coming soon...</CenterText>
+    </>
+  )
+}
+
+const Lyrics = () => {
+  return (
+    <>
+      <Header>Lyrics</Header>
+      <CenterText>
+        全15曲<br />
+        Coming soon...
+      </CenterText>
+    </>
+  )
+}
+
+const Price = () => {
+  return (
+    <>
+      <Header>Price</Header>
+      <CenterText>1,500円</CenterText>
+    </>
+  )
+}
+
+const Schedule = () => {
+  return (
+    <>
+      <Header>Schedule</Header>
+      <CenterText>
+        2024.10.19 (Sat.) クロスフェード公開<br />
+        2024.10.27 (Sun.) <a href="https://www.m3net.jp/">M3-2024秋</a>にて頒布<br />
+        2024.11.01 (Fri.) 通販開始 (予定)<br />
+        2024.11.20 (Wed.) ~ 2024.11.23 (Sat.) <a href="https://www.nf.la/">京都大学11月祭</a>内即売会「<a href="https://comicomm.netlify.app/">Comic Community 06</a>」にて頒布<br />
+        2024.11.23 (Sat.) <a href="https://www.ketto.com/tvm/">THE VOC@LOiD M@STER 57</a>にて頒布
+      </CenterText>
     </>
   )
 }
@@ -240,9 +293,14 @@ const App = () => {
     <Page>
       <Banner />
       <Main>
+        <Introduction />
         <Members />
-        <Illustrator />
+        <Artwork />
         <Organizer />
+        <XFD />
+        <Lyrics />
+        <Price />
+        <Schedule />
       </Main>
     </Page>
   )
