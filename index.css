@@ -3,9 +3,6 @@ html {
 }
 
 body {
-  background-image: url(banner-bg.png);
-  background-size: cover;
-  background-position: middle;
   margin: 0px;
   font-family: "Kiwi Maru", serif;
 }
