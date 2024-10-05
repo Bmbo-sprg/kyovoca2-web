@@ -9,6 +9,7 @@ import fuyune from "./assets/icons/fuyune.jpg";
 import styled from "styled-components";
 import members from "./members";
 import React, { useState } from "react";
+import { Helmet } from "react-helmet";
 
 const Header = styled.h1`
   text-align: center;
@@ -291,6 +292,10 @@ const Page = styled.div`
 const App = () => {
   return (
     <Page>
+      <Helmet>
+        <meta property="og:image" content={jacket} />
+        <meta property="twitter:image" content={jacket} />
+      </Helmet>
       <Banner />
       <Main>
         <Introduction />
