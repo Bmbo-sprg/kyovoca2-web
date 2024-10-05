@@ -1,5 +1,9 @@
 import bg from "./assets/banner-bg.png";
 import jacket from "./assets/jacket.png";
+import niconico from "./assets/icons/niconico.png";
+import youtube from "./assets/icons/youtube.png";
+import x from "./assets/icons/x.png";
+import soundcloud from "./assets/icons/soundcloud.png";
 import styled from "styled-components";
 import members from "./members";
 import React from "react";
@@ -48,27 +52,94 @@ interface MemberProps {
     name: string;
     comment: string;
     icon: string;
+    niconico?: string;
+    youtube?: string;
+    x?: string;
+    soundcloud?: string;
   }
 };
 
-const Member: React.FC<MemberProps> = ( { member } ) => {
+interface LinkIconProps {
+  src: string;
+  href: string;
+}
+
+const MemberContainer = styled.div`
+  border-radius: 1rem;
+  background-color: #dae2eb;
+  display: flex;
+  width: 230px;
+  height: 90px;
+`;
+
+const Icon = styled.img`
+  border-radius: 1rem;
+  width: 50px;
+  height: 50px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  margin-left: 10px;
+  margin-right: 10px;
+`;
+
+const NameLink = styled.div`
+
+`;
+
+const Name = styled.h2`
+  font-size: 24px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
+
+const LinkIcons = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+const LinkIcon: React.FC<LinkIconProps> = ( {src, href} ) => {
   return (
-    <div>
-      <h2>{member.name}</h2>
-      <p style={{ whiteSpace: 'pre-wrap' }}>{member.comment}</p>
-      <img src={member.icon} alt={member.name} width={"100px"}/>
-    </div>
+    <a href={href}>
+      <img src={src} height={"15px"} />
+    </a>
   )
 }
 
+const Member: React.FC<MemberProps> = ( { member } ) => {
+  return (
+    <MemberContainer>
+      <Icon src={member.icon} alt={member.name} />
+      <NameLink>
+        <Name>{member.name}</Name>
+        <LinkIcons>
+          {member.niconico && <LinkIcon src={niconico} href={member.niconico}/>}
+          {member.youtube && <LinkIcon src={youtube} href={member.youtube} />}
+          {member.x && <LinkIcon src={x} href={member.x} />}
+          {member.soundcloud && <LinkIcon src={soundcloud} href={member.soundcloud} />}
+        </LinkIcons>
+        {/* <p style={{ whiteSpace: 'pre-wrap' }}>{member.comment}</p> */}
+      </NameLink>
+    </MemberContainer>
+  )
+}
+
+const MembersContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+`;
+
 const Members = () => {
   return (
-    <div>
+    <>
       <Header>Members</Header>
-      {members.map((member, index) => (
-        <Member key={index} member={member} />
-      ))}
-    </div>
+      <MembersContainer>
+        {members.map((member, index) => (
+          <Member key={index} member={member} />
+        ))}
+      </MembersContainer>
+    </>
   )
 }
 
