@@ -158,6 +158,15 @@ const Member: React.FC<MemberProps> = ( { member, onHover, onLeave, interactive 
   )
 }
 
+const MembersNote = styled.p`
+  text-align: center;
+  margin-top: -20px;
+
+  @media (min-width: 600px) {
+    display: none;
+  }
+`;
+
 const MembersContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -184,6 +193,7 @@ const Members = () => {
   return (
     <>
       <Header>Composers</Header>
+      <MembersNote>メンバーをタップするとコメントが下に表示されます</MembersNote>
       <MembersContainer>
         {members.map((member, index) => (
           <Member
