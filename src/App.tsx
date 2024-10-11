@@ -273,10 +273,10 @@ const Schedule = () => {
       <Header>Schedule</Header>
       <CenterText>
         2024.10.19 (Sat.) クロスフェード公開<br />
-        2024.10.27 (Sun.) <a href="https://www.m3net.jp/">M3-2024秋</a>にて頒布<br />
+        2024.10.27 (Sun.) <a href="https://www.m3net.jp/">M3-2024秋 第二展示場 お-25a</a><br />
         2024.11.01 (Fri.) 通販開始 (予定)<br />
         2024.11.20 (Wed.) ~ 2024.11.23 (Sat.) <a href="https://www.nf.la/">京都大学11月祭</a>内即売会「<a href="https://comicomm.netlify.app/">Comic Community 06</a>」にて頒布<br />
-        2024.11.23 (Sat.) <a href="https://www.ketto.com/tvm/">THE VOC@LOiD M@STER 57</a>にて頒布
+        2024.11.23 (Sat.) <a href="https://www.ketto.com/tvm/">THE VOC@LOiD M@STER 57 D-24</a>
       </CenterText>
     </>
   )
