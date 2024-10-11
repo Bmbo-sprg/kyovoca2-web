@@ -6,10 +6,16 @@ import x from "./assets/icons/x.png";
 import soundcloud from "./assets/icons/soundcloud.png";
 import pixiv from "./assets/icons/pixiv.png";
 import fuyune from "./assets/icons/fuyune.jpg";
+import booth from "./assets/icons/booth.svg";
 import styled from "styled-components";
 import members from "./members";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
+import { useMeasure } from "@uidotdev/usehooks";
+import lyrics from "./lyrics";
+import { Swiper, SwiperSlide } from "swiper/react";
+import 'swiper/css';
+import { Link } from "react-router-dom";
 
 const Header = styled.h1`
   text-align: center;
@@ -27,6 +33,20 @@ const CenterText = styled.p`
   margin-top: 40px;
   font-size: 1.2rem;
   line-height: 2;
+`;
+
+const HintText = styled(CenterText)`
+  font-size: 0.8rem;
+  line-height: 1;
+  margin-top: 10px;
+`;
+
+const ResponsiveBr = styled.br`
+  display: none;
+
+  @media (max-width: 600px) {
+    display: block;
+  }
 `;
 
 const ResponsiveImage = styled.img`
@@ -61,8 +81,8 @@ const Banner = () => {
 const Introduction = () => {
   return (
     <CenterText>
-      サークル、回生、音楽ジャンルの垣根を超えた、<br />
-      気鋭京大生ボカロPによるコンピレーションアルバム<br />
+      サークル、回生、音楽<ResponsiveBr />ジャンルの垣根を超えた、<br />
+      気鋭京大生ボカロPによる<ResponsiveBr />コンピレーションアルバム<br />
       Kyoto University VOCALOID Compilation 2 「Bros.」
     </CenterText>
   )
@@ -237,46 +257,208 @@ const Organizer = () => {
   )
 }
 
-const XFD = () => {
+const XFDContainer = styled.div``;
+
+const XFDIframe = styled.iframe`
+  border-radius: 1rem;
+  border-style: none;
+  overflow: hidden;
+`;
+
+interface XFDProps {
+  isPublished: boolean;
+};
+
+const XFD: React.FC<XFDProps> = ({ isPublished }) => {
+  const [ref, { width }] = useMeasure();
+
   return (
     <>
       <Header>Crossfade</Header>
-      <CenterText>Coming soon...</CenterText>
+      <XFDContainer ref={ref}>
+        {isPublished ? (
+          <XFDIframe
+            width={Math.floor(width || 200)}
+            height={Math.floor((width || 200) * 9 / 16)}
+            src="https://www.youtube.com/embed/Mj0Fx-Q_pgM"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+        ) : (
+          <CenterText>Coming soon...</CenterText>
+        )}
+      </XFDContainer>
     </>
   )
 }
 
-const Lyrics = () => {
+const TracksContainer = styled.div`
+  overflow: auto;
+`;
+
+const TracksList = styled.ol`
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 400px;
+  width: fit-content;
+  line-height: 2;
+`;
+
+const TrackTitle = styled.span`
+  font-size: 1.2rem;
+  margin-left: 5px;
+`;
+
+const TrackArtist = styled.span`
+  font-size: 1rem;
+  margin-left: 10px;
+
+  &:before {
+    content: " / ";
+  }
+`;
+
+const TrackFeat = styled.span`
+  font-size: 0.8rem;
+  margin-left: 10px;
+`;
+
+interface TracksProps {
+  isXFDPublished: boolean;
+};
+
+const Tracks: React.FC<TracksProps> = ({ isXFDPublished }) => {
+  return (
+    <>
+      <Header>Tracks</Header>
+      {isXFDPublished ? (
+        <TracksContainer>
+          <TracksList>
+            {lyrics.map((track, index) => (
+              <li key={index}>
+                <TrackTitle>{track.title}</TrackTitle><ResponsiveBr />
+                <TrackArtist>{track.artist}</TrackArtist>
+                <TrackFeat>{track.feat}</TrackFeat>
+              </li>
+            ))}
+          </TracksList>
+        </TracksContainer>
+      ) : (
+        <CenterText>
+          全15曲<br />
+          Coming soon...
+        </CenterText>
+      )}
+    </>
+  );
+};
+
+interface LyricsProps {
+  isPublished: boolean;
+};
+
+const SwiperContainer = styled.div`
+  height: 60vh;
+  overflow: auto;
+`;
+
+const LyricTitle = styled(CenterText)`
+  margin-top: -10px;
+`;
+
+const LyricContainer = styled.div`
+  white-space: pre-wrap;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+`;
+
+const Lyrics: React.FC<LyricsProps> = ({ isPublished }) => {
   return (
     <>
       <Header>Lyrics</Header>
-      <CenterText>
-        全15曲<br />
-        Coming soon...
-      </CenterText>
+      {isPublished && <HintText>←スワイプしてください→</HintText>}
+      {isPublished ? (
+        <SwiperContainer>
+          <Swiper
+            slidesPerView={1}
+            spaceBetween={10}
+          >
+            {lyrics.map((track, index) => (
+              <SwiperSlide key={index}>
+                <LyricTitle>
+                  <TrackTitle>{track.title}</TrackTitle><ResponsiveBr />
+                  <TrackArtist>{track.artist}</TrackArtist>
+                  <TrackFeat>{track.feat}</TrackFeat>
+                </LyricTitle>
+                <LyricContainer>
+                  {track.lyrics}
+                </LyricContainer>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </SwiperContainer>
+      ) : (
+        <CenterText>
+          Coming soon...
+        </CenterText>
+      )}
     </>
   )
 }
 
-const Price = () => {
+const BoothIcon = styled.img`
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 200px;
+`;
+
+interface PriceProps {
+  isLyricsPublished: boolean;
+  isBoothPublished: boolean;
+};
+
+const Price: React.FC<PriceProps> = ({ isLyricsPublished, isBoothPublished }) => {
   return (
     <>
-      <Header>Price</Header>
-      <CenterText>1,500円</CenterText>
+      <Header>Buy</Header>
+      <CenterText>頒布価格: 1,500円</CenterText>
+      {isBoothPublished && <a href="https://aotakeuma.booth.pm/items/6179765">
+        <BoothIcon src={booth} alt="Booth" />
+      </a>}
+      <HintText>(通販: +送料 210円)</HintText>
+      {isLyricsPublished && <Link to="/download">
+        <HintText>DLキーを持っている方はこちら</HintText>
+      </Link>}
     </>
   )
 }
 
-const Schedule = () => {
+interface ScheduleProps {
+  isXFDPublished: boolean;
+  isBoothPublished: boolean;
+};
+
+const Schedule: React.FC<ScheduleProps> = ({ isXFDPublished, isBoothPublished }) => {
   return (
     <>
       <Header>Schedule</Header>
       <CenterText>
-        2024.10.19 (Sat.) クロスフェード公開<br />
-        2024.10.27 (Sun.) <a href="https://www.m3net.jp/">M3-2024秋 第二展示場 お-25a</a><br />
-        2024.11.01 (Fri.) 通販開始 (予定)<br />
+        {!isXFDPublished && (
+          <>
+            2024.10.19 (Sat.) XFD公開<br />
+          </>
+        )}
+        2024.10.27 (Sun.) <a href="https://www.m3net.jp/">M3-2024秋 第二展示場 お-25a</a>にて頒布<br />
+        {!isBoothPublished && (
+          <>
+            2024.11.01 (Fri.) 通販開始<br />
+          </>
+        )}
         2024.11.20 (Wed.) ~ 2024.11.23 (Sat.) <a href="https://www.nf.la/">京都大学11月祭</a>内即売会「<a href="https://comicomm.netlify.app/">Comic Community 06</a>」にて頒布<br />
-        2024.11.23 (Sat.) <a href="https://www.ketto.com/tvm/">THE VOC@LOiD M@STER 57 D-24</a>
+        2024.11.23 (Sat.) <a href="https://www.ketto.com/tvm/">THE VOC@LOiD M@STER 57 D-24</a>にて頒布
       </CenterText>
     </>
   )
@@ -300,6 +482,17 @@ const Page = styled.div`
 `;
 
 const App = () => {
+  const [isXFDPublished, setIsXFDPublished] = useState(false);
+  const [isLyricsPublished, setIsLyricsPublished] = useState(false);
+  const [isBoothPublished, setIsBoothPublished] = useState(false);
+
+  useEffect(() => {
+    const now = new Date();
+    setIsXFDPublished(now >= new Date("2024-10-19T20:00:00+09:00"));
+    setIsLyricsPublished(now >= new Date("2024-10-27T10:30:00+09:00"));
+    setIsBoothPublished(now >= new Date("2024-11-01T00:00:00+09:00"));
+  }, []);
+
   return (
     <Page>
       <Helmet>
@@ -312,10 +505,17 @@ const App = () => {
         <Members />
         <Artwork />
         <Organizer />
-        <XFD />
-        <Lyrics />
-        <Price />
-        <Schedule />
+        <XFD isPublished={isXFDPublished}/>
+        <Tracks isXFDPublished={isXFDPublished}/>
+        <Lyrics isPublished={isLyricsPublished}/>
+        <Price
+          isLyricsPublished={isLyricsPublished}
+          isBoothPublished={isBoothPublished}
+        />
+        <Schedule
+          isXFDPublished={isXFDPublished}
+          isBoothPublished={isBoothPublished}
+        />
       </Main>
     </Page>
   )
