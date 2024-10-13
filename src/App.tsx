@@ -231,17 +231,26 @@ const Members = () => {
 }
 
 const Artwork = () => {
+  const [comment, setComment] = useState("");
+
   return (
     <>
       <Header>Artwork</Header>
       <MembersContainer>
-        <Member member={{
+        <Member
+          member={{
           "name": "柚雪ふゆね",
           "icon": fuyune,
           "x": "https://x.com/Snow53902",
           "pixiv": "https://www.pixiv.net/users/42157580",
-        }} />
+        }}
+          onHover={() => setComment(`前回のボカロコンピに引き続きジャケットのイラストを描かせていただきました、柚雪ふゆねです。涼しげなイラストを描いています。
+多くの方に興味を持っていただけるよう、今回は京都大学のコンピであるということを強調したデザインにしてみました。
+収録されている曲もいいものばかりなので是非手に取ってもらえると嬉しいです。`)}
+          onLeave={() => setComment("")}
+          interactive />
       </MembersContainer>
+      <CommentContainer>{comment}</CommentContainer>
     </>
   )
 }
