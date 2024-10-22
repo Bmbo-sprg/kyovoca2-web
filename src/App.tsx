@@ -437,7 +437,7 @@ const Price: React.FC<PriceProps> = ({ isLyricsPublished, isBoothPublished }) =>
       {isBoothPublished && <a href="https://aotakeuma.booth.pm/items/6179765">
         <BoothIcon src={booth} alt="Booth" />
       </a>}
-      <HintText>(通販: +送料 210円)</HintText>
+      <HintText>(通販: +送料 185円)</HintText>
       {isLyricsPublished && <Link to="/download">
         <HintText>DLキーを持っている方はこちら</HintText>
       </Link>}
