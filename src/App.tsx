@@ -506,7 +506,7 @@ const App = () => {
     <Page>
       <Helmet>
         <meta property="og:image" content={"https://bros.aotakeuma.com" + jacket} />
-        <meta property="twitter:image" content={"https://bros.aotakeuma.com" + jacket} />
+        <meta name="twitter:image" content={"https://bros.aotakeuma.com" + jacket} />
       </Helmet>
       <Banner />
       <Main>
